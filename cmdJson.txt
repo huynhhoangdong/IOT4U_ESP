@@ -1,0 +1,27 @@
+{
+  "CMD": "GET_WIFI_LIST",
+}
+
+{
+  "CMD": "WIFI_LIST",
+  "MAC": "AHFJFKFKFKFKFKF"
+  "WIFI":["AURIO-TECH ROOM","VIETTEL_GPON_537BE0","Ben10","AURIO-PRODUCTION ROOM","Aurio-Office","越南研发中心","AURIO-MEETING ROOM","CTY_TrienDat"]
+}
+
+{
+  "CMD" : "CONFIG_INFO",
+  "UDID": "hsdhfashdfalsdhfdhf/E2A",
+  "SSID": "AURIO-TECH ROOM",
+  "PASS": "1234567890"
+}
+  
+{
+  "CMD": "WIFI_CONNECTION_RESULT",
+  "RESULT":"OK/FAILED",
+}
+
+UDID/A2E : APP Publish to ESP, ESP Subscribe APP's Topic
+
+UDID/E2A : ESP Publish to APP, APP Subscribe ESP's Topic
+
+{"FUNCTION": "ON/OFF/RED/GREEN/BLUE"}
