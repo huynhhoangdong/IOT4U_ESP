@@ -76,3 +76,4 @@ int i = 0;
 uint16_t idLength; 
 String ID_MSG = "";
 boolean AP_CONNECTION = true;
+static uint8_t disconnectCounter = 0;

@@ -187,6 +187,8 @@ void setup() {
   //--MQTT--
   if(___mqtt_AWS_CONNECT() == MQTT_STATUS_FAIL){                      // Try to connect to AWS MQTT +++++ Failed to connect to AWS MQTT
     Serial.println("\n>>> WARNING: FORCED TO RESTART BECAUSE THE CONTROLLER CAN NOT CONNECT TO MQTT\n");
+    display.println("\n>>> MQTT is NOT connected -> RESTART\n");
+    display.display();
     ESP.restart();                                                      
   } else {
     Serial.println("\n>>> CONNECT TO AWS IOT SERVICE SUCCESS\n");
@@ -204,7 +206,13 @@ void loop () {
     
   } else {
     Serial.println("AWSMQTTClient is not connected...");
+    delay(1000);
+    disconnectCounter ++;
+    if(disconnectCounter >= 10){  // force to restart the Controller
+      Serial.println("\n>>> WARNING: FORCED TO RESTART BECAUSE THE CONTROLLER LOST THE MQTT CONNECTION\n");
+      ESP.restart();  
     delay(2000);
+    }
   }
   
 }
