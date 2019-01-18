@@ -200,6 +200,7 @@ void setup() {
 
 void loop () {
   if (AWSMQTTClient.isConnected()) {
+    Serial.println(WiFi.RSSI());
 
     AWSMQTTClient.yield();
     yield();
