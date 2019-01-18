@@ -66,6 +66,7 @@ void setup() {
           /* Analyze the commands*/
           String commandFromAPP = receivedJSONObject[String("CMD")];
           if (commandFromAPP == "GET_WIFI_LIST") {
+            scanWifi();
             client.println(sendJSONString);
             Serial.println(sendJSONString);
 
