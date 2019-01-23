@@ -87,6 +87,8 @@ void setup() {
               topicPub[i] = id[i];
               mqttClientID[i] = id[idLength-1-i];
             }
+            Serial.print("mqttClientID: ");
+            Serial.println(mqttClientID);
 
             Serial.print("UDID:");
             Serial.println(id);
@@ -158,7 +160,10 @@ void setup() {
   {
     topicSub[i] = ID_MSG[i];
     topicPub[i] = ID_MSG[i];
+    mqttClientID[i] = ID_MSG[idLength-1-i];
   }
+  Serial.print("mqttClientID: ");
+  Serial.println(mqttClientID);
   Serial.print("SUBSCRIBING TOPIC:");
   Serial.println(topicSub);
   Serial.print("PUBLISHING TOPIC:");
