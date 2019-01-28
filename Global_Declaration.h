@@ -44,7 +44,8 @@ char *iamSecretKey = (char *) "BSocLIfz4Y059Gan4S6K6mUV84+KgNmzy2D1+DiH";
 String a = "$aws/things/test/shadow/update";
 const char* aws_topic  = "$aws/things/test/shadow/update";
 char* topicSub  = "000000000000000000000000000000000000/A2E";
-char* topicPub  = "000000000000000000000000000000000000/E2A";
+//char* topicPub  = "000000000000000000000000000000000000/E2A";
+char* topicPub  = "$aws/things/000000000000000000000000000000000000/shadow/update";
 char* mqttClientID = "000000000000000000000000000000000000";
 
 ESP8266DateTimeProvider dtp;

@@ -84,7 +84,7 @@ void setup() {
             for ( uint8_t i = 0; i < idLength; i++)
             {
               topicSub[i] = id[i];
-              topicPub[i] = id[i];
+              topicPub[i+12] = id[i];
               mqttClientID[i] = id[idLength-1-i];
             }
             Serial.print("mqttClientID: ");
@@ -109,22 +109,36 @@ void setup() {
 
             //**************************************************
             WiFi.begin(SSID.c_str(), PASS.c_str());
-            while (WiFi.status() != WL_CONNECTED) {
-              delay(500);
+            //Try WiFi 10 times
+            for(int count = 0; (count < 10) & (WiFi.status() != WL_CONNECTED); count++){
+              stringLED.setPixelColor(0, 0, 0, 64);   stringLED.show();   delay(220);     // BLUE FLASHING
+              stringLED.setPixelColor(0, 64, 32, 0);  stringLED.show();   delay(220);     // YELLOW FLASHING
+              stringLED.setPixelColor(0, 0, 0, 64);   stringLED.show();   delay(220);     // BLUE FLASHING
+              stringLED.setPixelColor(0, 64, 32, 0);  stringLED.show();   delay(220);     // YELLOW FLASHING
               Serial.print(".");
             }
+            if(WiFi.status() == WL_CONNECTED){ 
+              if (client.connected()) {
+                client.flush();
+                client.println("{\"CMD\":\"WIFI_CONNECTION_RESULT\",\"RESULT\":\"OK\"}");
+                Serial.println("{\"CMD\":\"WIFI_CONNECTION_RESULT\",\"RESULT\":\"OK\"}");
+                
+                stringLED.setPixelColor(0, 0, 64, 0);   stringLED.show();
+                AP_CONNECTION = false;
+                client.stop();
+              } else {
+                Serial.println("APP IS NOT CONNECTED WITH CONTROLLER'S WIFI");
+                stringLED.setPixelColor(0, 64, 0, 0);   stringLED.show();
+              }
 
-            if (client.connected()) {
-              client.flush();
-              client.println("{\"CMD\":\"WIFI_CONNECTION_RESULT\",\"RESULT\":\"OK\"}");
-              Serial.println("{\"CMD\":\"WIFI_CONNECTION_RESULT\",\"RESULT\":\"OK\"}");
-            } else {
-              Serial.println("NOT CONNECTED");
+            }else{
+                client.flush();
+                client.println("{\"CMD\":\"WIFI_CONNECTION_RESULT\",\"RESULT\":\"FAILED\"}");
+                Serial.println("{\"CMD\":\"WIFI_CONNECTION_RESULT\",\"RESULT\":\"FAILED\"}");
             }
 
             //break;
-            AP_CONNECTION = false;
-            client.stop();
+
           }
           //----
           display.print(request);
@@ -159,7 +173,7 @@ void setup() {
   for ( uint8_t i = 0; i < idLength; i++)
   {
     topicSub[i] = ID_MSG[i];
-    topicPub[i] = ID_MSG[i];
+    topicPub[i+12] = ID_MSG[i];
     mqttClientID[i] = ID_MSG[idLength-1-i];
   }
   Serial.print("mqttClientID: ");
@@ -178,6 +192,7 @@ void setup() {
   Serial.println(" - ");
 
   //--WIFI--
+  //WiFi.mode(WIFI_STA); 
   WiFi.begin();
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
@@ -221,5 +236,4 @@ void loop () {
     delay(2000);
     }
   }
-  
 }

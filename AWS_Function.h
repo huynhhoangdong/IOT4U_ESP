@@ -28,11 +28,13 @@ void AWSTopic_CallbackFunction(const char* topic, const char* jsMsg) {
     for (int i = 0; i < PIXEL_COUNT; i++) stringLED.setPixelColor(i, 0, 0, 64);   //BLUE
     stringLED.show();
   }
-
+  yield();
   //--Send back to phone--
   JsonObject sendJSONObject = sendJSON.to<JsonObject>();
-
-  sendJSONObject["FUNCTION"] = commandFromAPP;
+  JsonObject state = sendJSONObject.createNestedObject("state");
+  JsonObject state_reported = state.createNestedObject("reported");
+  
+  state_reported["STATUS"] = commandFromAPP;
   Serial.print("Send back message to phone: ");
   serializeJson(sendJSONObject, Serial);
   Serial.println("\n----------------------------");
